@@ -1,6 +1,6 @@
 FROM library/tomcat:9-jre11
 
-ENV ARCH=${GUACARCH} \
+ENV ARCH=amd64 \
   GUAC_VER=${GUACVERSION} \
   GUACAMOLE_HOME=/app/guacamole
 
