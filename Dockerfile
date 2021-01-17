@@ -42,19 +42,18 @@ RUN wget "https://ftp.wayne.edu/apache/guacamole/${GUAC_VER}/source/guacamole-se
   && ldconfig
 
 # Install guacamole-client and postgres auth adapter
-RUN set -x \
-  && rm -rf ${CATALINA_HOME}/webapps/ROOT \
-  && wget ${CATALINA_HOME}/webapps/ROOT.war "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${GUAC_VER}.war" \
-  && wget mysql-connector-java-8.0.22.tar.gz "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.22.tar.gz" \
-  && tar xvzf mysql-connector-java-8.0.22.tar.gz \
-  && mv mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar ${GUACAMOLE_HOME}/lib/ \
-  && rm -rf mysql-connector-java-8.0.22.tar.gz \
-  && wget "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz" \
-  && tar -xzf guacamole-auth-jdbc-${GUAC_VER}.tar.gz \
-  && rm -rf mysql-connector-java-8.0.22 \
-  && cp -R guacamole-auth-jdbc-${GUAC_VER}/mysql/guacamole-auth-jdbc-mysql-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions/ \
-  && cp -R guacamole-auth-jdbc-${GUAC_VER}/mysql/schema ${GUACAMOLE_HOME}/ \
-  && rm -rf guacamole-auth-jdbc-${GUAC_VER} guacamole-auth-jdbc-${GUAC_VER}.tar.gz
+RUN rm -rf ${CATALINA_HOME}/webapps/ROOT 
+RUN wget ${CATALINA_HOME}/webapps/ROOT.war "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${GUAC_VER}.war"
+RUN wget mysql-connector-java-8.0.22.tar.gz "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.22.tar.gz"
+RUN tar xvzf mysql-connector-java-8.0.22.tar.gz
+RUN mv mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar ${GUACAMOLE_HOME}/lib/
+RUN rm -rf mysql-connector-java-8.0.22.tar.gz
+RUN wget "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz"
+RUN tar -xzf guacamole-auth-jdbc-${GUAC_VER}.tar.gz
+RUN rm -rf mysql-connector-java-8.0.22
+RUN cp -R guacamole-auth-jdbc-${GUAC_VER}/mysql/guacamole-auth-jdbc-mysql-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions/
+RUN cp -R guacamole-auth-jdbc-${GUAC_VER}/mysql/schema ${GUACAMOLE_HOME}/
+RUN rm -rf guacamole-auth-jdbc-${GUAC_VER} guacamole-auth-jdbc-${GUAC_VER}.tar.gz
 
 # Add optional extensions
 RUN set -xe \
