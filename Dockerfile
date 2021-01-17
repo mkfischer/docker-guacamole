@@ -1,12 +1,12 @@
 FROM library/tomcat:9-jre11
 
-ENV ARCH=amd64 \
-  GUAC_VER=1.3.0 \
-  GUACAMOLE_HOME=/app/guacamole
+ENV ARCH="amd64"
+ENV GUAC_VER=1.3.0
+ENV GUACAMOLE_HOME=/app/guacamole
 
 # Apply the s6-overlay
 
-RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v2.1.0.2/s6-overlay-${ARCH}.tar.gz" \
+RUN wget "https://github.com/just-containers/s6-overlay/releases/download/v2.1.0.2/s6-overlay-${ARCH}.tar.gz" \
   && tar -xzf s6-overlay-${ARCH}.tar.gz -C / \
   && tar -xzf s6-overlay-${ARCH}.tar.gz -C /usr ./bin \
   && rm -rf s6-overlay-${ARCH}.tar.gz \
@@ -31,7 +31,7 @@ RUN [ "$ARCH" = "armhf" ] && ln -s /usr/local/lib/freerdp /usr/lib/arm-linux-gnu
 RUN [ "$ARCH" = "amd64" ] && ln -s /usr/local/lib/freerdp /usr/lib/x86_64-linux-gnu/freerdp || exit 0
 
 # Install guacamole-server
-RUN wget 'https://ftp.wayne.edu/apache/guacamole/${GUAC_VER}/source/guacamole-server-${GUAC_VER}.tar.gz' \
+RUN wget "https://ftp.wayne.edu/apache/guacamole/${GUAC_VER}/source/guacamole-server-${GUAC_VER}.tar.gz" \
   && tar -xzf guacamole-server-${GUAC_VER}.tar.gz \
   && cd guacamole-server-${GUAC_VER} \
   && ./configure \
