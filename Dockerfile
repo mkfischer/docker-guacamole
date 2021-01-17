@@ -18,12 +18,12 @@ WORKDIR ${GUACAMOLE_HOME}
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
-    libcairo2-dev libjpeg62-turbo-dev libpng-dev \
+    libcairo2-dev wget libjpeg62-turbo-dev libpng-dev \
     libossp-uuid-dev libavcodec-dev libavutil-dev \
     libswscale-dev freerdp2-dev libfreerdp-client2-2 libpango1.0-dev \
     libssh2-1-dev libtelnet-dev libvncserver-dev \
     libpulse-dev libssl-dev libvorbis-dev libwebp-dev libwebsockets-dev \
-    ghostscript postgresql-${PG_MAJOR} \
+    ghostscript \
   && rm -rf /var/lib/apt/lists/*
 
 # Link FreeRDP to where guac expects it to be
@@ -31,8 +31,8 @@ RUN [ "$ARCH" = "armhf" ] && ln -s /usr/local/lib/freerdp /usr/lib/arm-linux-gnu
 RUN [ "$ARCH" = "amd64" ] && ln -s /usr/local/lib/freerdp /usr/lib/x86_64-linux-gnu/freerdp || exit 0
 
 # Install guacamole-server
-RUN curl -SLO "https://ftp.wayne.edu/apache/guacamole/${GUAC_VER}/source/guacamole-server-${GUAC_VER}.tar.gz" \
-  && tar xvf guacamole-server-${GUAC_VER}.tar.gz \
+RUN wget "https://ftp.wayne.edu/apache/guacamole/${GUAC_VER}/source/guacamole-server-${GUAC_VER}.tar.gz" \
+  && tar -xzf guacamole-server-${GUAC_VER}.tar.gz \
   && cd guacamole-server-${GUAC_VER} \
   && ./configure \
   && make -j$(getconf _NPROCESSORS_ONLN) \
