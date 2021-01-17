@@ -1,7 +1,7 @@
 FROM library/tomcat:9-jre11
 
 ENV ARCH=amd64 \
-  GUAC_VER=1.30 \
+  GUAC_VER=1.3.0 \
   GUACAMOLE_HOME=/app/guacamole
 
 # Apply the s6-overlay
@@ -31,7 +31,7 @@ RUN [ "$ARCH" = "armhf" ] && ln -s /usr/local/lib/freerdp /usr/lib/arm-linux-gnu
 RUN [ "$ARCH" = "amd64" ] && ln -s /usr/local/lib/freerdp /usr/lib/x86_64-linux-gnu/freerdp || exit 0
 
 # Install guacamole-server
-RUN wget "https://ftp.wayne.edu/apache/guacamole/${GUAC_VER}/source/guacamole-server-${GUAC_VER}.tar.gz" \
+RUN wget 'https://ftp.wayne.edu/apache/guacamole/${GUAC_VER}/source/guacamole-server-${GUAC_VER}.tar.gz' \
   && tar -xzf guacamole-server-${GUAC_VER}.tar.gz \
   && cd guacamole-server-${GUAC_VER} \
   && ./configure \
@@ -44,12 +44,12 @@ RUN wget "https://ftp.wayne.edu/apache/guacamole/${GUAC_VER}/source/guacamole-se
 # Install guacamole-client and postgres auth adapter
 RUN set -x \
   && rm -rf ${CATALINA_HOME}/webapps/ROOT \
-  && curl -SLo ${CATALINA_HOME}/webapps/ROOT.war "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${GUAC_VER}.war" \
-  && curl -SLo mysql-connector-java-8.0.22.tar.gz "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.22.tar.gz" \
+  && wget ${CATALINA_HOME}/webapps/ROOT.war "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${GUAC_VER}.war" \
+  && wget mysql-connector-java-8.0.22.tar.gz "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.22.tar.gz" \
   && tar xvzf mysql-connector-java-8.0.22.tar.gz \
   && mv mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar ${GUACAMOLE_HOME}/lib/ \
   && rm -rf mysql-connector-java-8.0.22.tar.gz \
-  && curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz" \
+  && wget "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz" \
   && tar -xzf guacamole-auth-jdbc-${GUAC_VER}.tar.gz \
   && rm -rf mysql-connector-java-8.0.22 \
   && cp -R guacamole-auth-jdbc-${GUAC_VER}/mysql/guacamole-auth-jdbc-mysql-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions/ \
@@ -61,7 +61,7 @@ RUN set -xe \
   && mkdir ${GUACAMOLE_HOME}/extensions-available \
   && for i in auth-ldap auth-duo auth-header auth-cas auth-openid auth-quickconnect auth-totp; do \
     echo "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
-    && curl -SLO "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
+    && wget "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
     && tar -xzf guacamole-${i}-${GUAC_VER}.tar.gz \
     && cp guacamole-${i}-${GUAC_VER}/guacamole-${i}-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions-available/ \
     && rm -rf guacamole-${i}-${GUAC_VER} guacamole-${i}-${GUAC_VER}.tar.gz \
