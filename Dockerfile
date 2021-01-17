@@ -1,7 +1,7 @@
 FROM library/tomcat:9-jre11
 
 ENV ARCH=amd64 \
-  GUAC_VER=${GUACVERSION} \
+  GUAC_VER=1.30 \
   GUACAMOLE_HOME=/app/guacamole
 
 # Apply the s6-overlay
