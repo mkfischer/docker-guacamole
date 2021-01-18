@@ -45,7 +45,7 @@ RUN wget "https://ftp.wayne.edu/apache/guacamole/${GUAC_VER}/source/guacamole-se
 RUN rm -rf ${CATALINA_HOME}/webapps/ROOT 
 RUN wget "https://apache.claz.org/guacamole/${GUAC_VER}/binary/guacamole-${GUAC_VER}.war"
 RUN mv guacamole-${GUAC_VER}.war ${CATALINA_HOME}/webapps/ROOT.war
-RUN wget mysql-connector-java-8.0.22.tar.gz "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.22.tar.gz"
+RUN wget "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.22.tar.gz"
 RUN tar xvzf mysql-connector-java-8.0.22.tar.gz
 RUN mv mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar ${GUACAMOLE_HOME}/lib/
 RUN rm -rf mysql-connector-java-8.0.22.tar.gz
