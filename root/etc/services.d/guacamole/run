@@ -25,5 +25,7 @@
 #  fi
 #fi
 
+/etc/cont-init.d/30-defaults.sh
+/etc/cont-init.d/50-extensions
 echo "Starting guacamole client..."
 s6-setuidgid root catalina.sh run
