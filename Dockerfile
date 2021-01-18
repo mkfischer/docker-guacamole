@@ -49,7 +49,7 @@ RUN wget "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8
 RUN tar xvzf mysql-connector-java-8.0.22.tar.gz
 RUN mv mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar ${GUACAMOLE_HOME}/lib/
 RUN rm -rf mysql-connector-java-8.0.22.tar.gz
-RUN wget "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz"
+RUN wget "https://mirror.olnevhost.net/pub/apache/guacamole/${GUAC_VER}/binary/guacamole-auth-jdbc-${GUAC_VER}.tar.gz"
 RUN tar -xzf guacamole-auth-jdbc-${GUAC_VER}.tar.gz
 RUN rm -rf mysql-connector-java-8.0.22
 RUN cp -R guacamole-auth-jdbc-${GUAC_VER}/mysql/guacamole-auth-jdbc-mysql-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions/
