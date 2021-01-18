@@ -60,7 +60,7 @@ RUN rm -rf guacamole-auth-jdbc-${GUAC_VER} guacamole-auth-jdbc-${GUAC_VER}.tar.g
 RUN set -xe \
   && mkdir ${GUACAMOLE_HOME}/extensions-available \
   && for i in auth-ldap auth-duo auth-header auth-cas auth-openid auth-quickconnect auth-totp; do \
-  && echo "https://mirrors.ocf.berkeley.edu/apache/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
+    echo "https://mirrors.ocf.berkeley.edu/apache/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
   && wget "https://mirrors.ocf.berkeley.edu/apache/guacamole/${GUAC_VER}/binary/guacamole-${i}-${GUAC_VER}.tar.gz" \
   && tar -xzf guacamole-${i}-${GUAC_VER}.tar.gz \
   && cp guacamole-${i}-${GUAC_VER}/guacamole-${i}-${GUAC_VER}.jar ${GUACAMOLE_HOME}/extensions-available/ \
